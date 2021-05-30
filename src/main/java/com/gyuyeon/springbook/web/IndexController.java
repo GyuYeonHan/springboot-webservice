@@ -1,6 +1,5 @@
 package com.gyuyeon.springbook.web;
 
-import com.gyuyeon.springbook.config.auth.LoginUser;
 import com.gyuyeon.springbook.config.auth.dto.SessionUser;
 import com.gyuyeon.springbook.service.posts.PostsService;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
@@ -20,12 +19,9 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
+    public String index(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
 
-        if (user != null) {
-            model.addAttribute("userName", user.getName());
-        }
 
         return "index";
     }
