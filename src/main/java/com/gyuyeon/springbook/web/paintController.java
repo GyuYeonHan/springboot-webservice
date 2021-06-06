@@ -17,4 +17,9 @@ public class paintController {
     public String paint1() {
         return "paint";
     }
+
+    @GetMapping("/paint2")
+    public String paint2() {
+        return "/paint/index23131";
+    }
 }
