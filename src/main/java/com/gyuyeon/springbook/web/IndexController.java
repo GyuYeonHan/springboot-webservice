@@ -16,18 +16,17 @@ public class IndexController {
 
     private final PostsService postsService;
     private final HttpSession httpSession;
-    private static final String TEMPLATE_ENGINE = "thymeleaf/";
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
 
-        return TEMPLATE_ENGINE + "index";
+        return "index";
     }
 
     @GetMapping("/posts/save")
     public String postsSave() {
-        return TEMPLATE_ENGINE + "posts-save";
+        return "posts-save";
     }
 
     @GetMapping("/posts/update/{id}")
@@ -35,7 +34,7 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return TEMPLATE_ENGINE + "posts-update";
+        return "posts-update";
     }
 
 
