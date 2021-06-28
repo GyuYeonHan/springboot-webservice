@@ -1,15 +1,15 @@
 package com.gyuyeon.springbook.web.dto;
 
 import com.gyuyeon.springbook.domain.posts.Posts;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class PostsSaveRequestDto {
+
+    public PostsSaveRequestDto() {
+    }
 
     @NotBlank
     private String title;

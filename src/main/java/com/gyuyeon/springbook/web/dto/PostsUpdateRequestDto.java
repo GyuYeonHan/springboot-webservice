@@ -1,17 +1,21 @@
 package com.gyuyeon.springbook.web.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class PostsUpdateRequestDto {
+
+    @NotNull
+    private Long id;
 
     @NotBlank
     private String title;
+
+    @NotBlank
+    private String author;
 
     @NotBlank
     private String content;

@@ -12,7 +12,7 @@ import org.springframework.util.StopWatch;
 @Slf4j
 public class LogAspect {
 
-    @Around("execution(* com.gyuyeon.springbook..*.IndexController.*(..))")
+//    @Around("execution(* com.gyuyeon.springbook..*.IndexController.*(..))")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
