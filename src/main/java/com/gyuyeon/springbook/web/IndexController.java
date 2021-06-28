@@ -1,6 +1,5 @@
 package com.gyuyeon.springbook.web;
 
-import com.gyuyeon.springbook.config.auth.dto.SessionUser;
 import com.gyuyeon.springbook.service.posts.PostsService;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +16,26 @@ public class IndexController {
 
     private final PostsService postsService;
     private final HttpSession httpSession;
+    private static final String TEMPLATE_ENGINE = "thymeleaf/";
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
 
-        return "index";
+        return TEMPLATE_ENGINE + "index";
     }
 
     @GetMapping("/posts/save")
     public String postsSave() {
-        return "posts-save";
+        return TEMPLATE_ENGINE + "posts-save";
     }
 
     @GetMapping("/posts/update/{id}")
-    public String postsSave(@PathVariable Long id, Model model) {
+    public String postsUpdate(@PathVariable Long id, Model model) {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "posts-update";
+        return TEMPLATE_ENGINE + "posts-update";
     }
 
 
