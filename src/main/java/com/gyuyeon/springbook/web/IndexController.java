@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,13 +33,13 @@ public class IndexController {
     @GetMapping("/save")
     public String saveFormView(Model model) {
         model.addAttribute("post", new PostsSaveRequestDto());
-        return "posts-save";
+        return "savePostForm";
     }
 
     @PostMapping("/save")
     public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "posts-save";
+            return "savePostForm";
         }
 
         postsService.save(dto);
@@ -52,7 +51,7 @@ public class IndexController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "posts-update";
+        return "updatePostForm";
     }
 
     @PostMapping("/{id}")
@@ -60,7 +59,7 @@ public class IndexController {
                          BindingResult bindingResult) {
         log.info("dto = {}", dto);
         if (bindingResult.hasErrors()) {
-            return "posts-update";
+            return "updatePostForm";
         }
         postsService.update(id, dto);
         return "redirect:/posts";
