@@ -1,9 +1,11 @@
 package com.gyuyeon.springbook.web;
 
+import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.service.posts.PostsService;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
+import com.gyuyeon.springbook.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/posts")
-public class IndexController {
+public class PostController {
 
     private final PostsService postsService;
     private final HttpSession httpSession;
@@ -31,8 +33,13 @@ public class IndexController {
     }
 
     @GetMapping("/save")
-    public String saveFormView(Model model) {
-        model.addAttribute("post", new PostsSaveRequestDto());
+    public String saveFormView(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user, Model model) {
+        PostsSaveRequestDto dto = new PostsSaveRequestDto();
+        if (user != null) {
+            dto.setAuthor(user.getName());
+        }
+
+        model.addAttribute("post", dto);
         return "savePostForm";
     }
 

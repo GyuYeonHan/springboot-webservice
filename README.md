@@ -1,11 +1,14 @@
 # 스프링 부트를 이용한 웹 게시판 구현
-http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/
+홈 화면: http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/
 
-http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/posts
+(테스트 ID: testuser, password: test)
+
+게시판 : http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/posts
+
+
 
 <hr />
 
-실습: 이동욱 님의 "스프링 부트와 AWS로 혼자 구현하는 웹 서비스"
 
 ## &#128204; 사용 기술
 
@@ -20,7 +23,6 @@ http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/posts
 - Travis CI
 - AWS EC2, RDS, S3, CodeDeploy 
 
-<br>
 
 ## &#128204; 기능 정의
 ### 실습
@@ -33,5 +35,6 @@ http://ec2-3-35-122-207.ap-northeast-2.compute.amazonaws.com/posts
 ![image](https://user-images.githubusercontent.com/54987488/120892254-515e1f80-c648-11eb-9668-c1ee00f3f5b8.png)
 ![image](https://user-images.githubusercontent.com/54987488/120892274-7488cf00-c648-11eb-9aa0-81ac5a52368b.png)
 
+##### 실습: 이동욱 님의 "스프링 부트와 AWS로 혼자 구현하는 웹 서비스"
 
 <br>
