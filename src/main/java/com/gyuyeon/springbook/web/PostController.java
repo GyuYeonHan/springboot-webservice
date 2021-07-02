@@ -2,6 +2,7 @@ package com.gyuyeon.springbook.web;
 
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.service.posts.PostsService;
+import com.gyuyeon.springbook.web.argumentresolver.Login;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
@@ -33,7 +34,7 @@ public class PostController {
     }
 
     @GetMapping("/save")
-    public String saveFormView(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user, Model model) {
+    public String saveFormView(@Login User user, Model model) {
         PostsSaveRequestDto dto = new PostsSaveRequestDto();
         if (user != null) {
             dto.setAuthor(user.getName());
