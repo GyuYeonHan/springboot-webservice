@@ -6,7 +6,6 @@ import com.gyuyeon.springbook.web.argumentresolver.Login;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
-import com.gyuyeon.springbook.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,7 @@ public class PostController {
     public String index(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
 
-        return "posts";
+        return "posts/posts";
     }
 
     @GetMapping("/save")
@@ -41,13 +40,13 @@ public class PostController {
         }
 
         model.addAttribute("post", dto);
-        return "savePostForm";
+        return "posts/savePostForm";
     }
 
     @PostMapping("/save")
     public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "savePostForm";
+            return "posts/savePostForm";
         }
 
         postsService.save(dto);
@@ -59,7 +58,7 @@ public class PostController {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
-        return "updatePostForm";
+        return "posts/updatePostForm";
     }
 
     @PostMapping("/{id}")
@@ -67,7 +66,7 @@ public class PostController {
                          BindingResult bindingResult) {
         log.info("dto = {}", dto);
         if (bindingResult.hasErrors()) {
-            return "updatePostForm";
+            return "posts/updatePostForm";
         }
         postsService.update(id, dto);
         return "redirect:/posts";

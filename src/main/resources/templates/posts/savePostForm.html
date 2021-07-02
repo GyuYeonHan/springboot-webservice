@@ -18,8 +18,10 @@
             <div class="form-group">
                 <label for="author">작성자</label>
                 <input type="text" id="author" th:if="${post.author != null}" class="form-control" th:field="*{author}" readonly>
-                <input type="text" th:unless="${post.author != null}" class="form-control" th:field="*{author}"
-                       th:errorclass="field-error" placeholder="작성자를 입력하세요">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="anonymousAuthor" onclick="check();">
+                    <label class="form-check-label" for="anonymousAuthor">익명으로 쓰기</label>
+                </div>
                 <div class="field-error" th:errors="*{author}">작성자 오류</div>
             </div>
             <div class="form-group">
@@ -34,6 +36,21 @@
         </form>
     </div>
 </div>
+
+<script th:inline="javascript">
+    function check() {
+        const input = document.getElementById("author");
+        const checkBox = document.getElementById('anonymousAuthor');
+        if (checkBox.checked) {
+            input.readOnly = false;
+            input.value = "";
+        } else {
+            input.readOnly = true;
+            input.value = [[${post.author}]];
+        }
+    }
+</script>
+
 <th:block th:replace="layout/fragment :: script" />
 </body>
 </html>
