@@ -1,16 +1,15 @@
 package com.gyuyeon.springbook.domain.user;
 
 import com.gyuyeon.springbook.domain.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class User extends BaseTimeEntity {
 

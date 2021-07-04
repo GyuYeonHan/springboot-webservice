@@ -26,7 +26,7 @@ public class PostController {
     private final HttpSession httpSession;
 
     @GetMapping
-    public String index(Model model) {
+    public String showPosts(Model model) {
         model.addAttribute("posts", postsService.findAllDesc());
 
         return "posts/posts";

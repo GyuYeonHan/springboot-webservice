@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String homeLogin(
-            @Login User loginUser, Model model) {
+    public String homeLogin(@Login User loginUser, Model model) {
         //세션에 회원 데이터가 없으면
         if (loginUser == null) {
             return "home";
