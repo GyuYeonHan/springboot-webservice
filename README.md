@@ -19,9 +19,13 @@
 - JPA
 - Mustache -> Thymeleaf (기존 Mustache 구현을 Thymeleaf로 변경하여 구현)
 
+#### Infra
+- AWS EC2 
+- AWS RDS (w. MariaDB)
+
 #### CI/CD
 - Travis CI
-- AWS EC2, RDS, S3, CodeDeploy 
+- AWS S3, CodeDeploy 
 
 ## [전체 구조]
 ![image](https://user-images.githubusercontent.com/54987488/124282775-294dd780-db86-11eb-9d06-35000fd657a6.png)
