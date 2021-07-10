@@ -3,6 +3,7 @@ package com.gyuyeon.springbook.web.user;
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.domain.user.UserRepository;
+import com.gyuyeon.springbook.service.user.UserService;
 import com.gyuyeon.springbook.web.user.form.UserSaveForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("user") User user) {
@@ -39,7 +40,7 @@ public class UserController {
                 .password(form.getPassword())
                 .build();
 
-        userRepository.save(user);
+        userService.save(user);
         return "redirect:/";
     }
 }

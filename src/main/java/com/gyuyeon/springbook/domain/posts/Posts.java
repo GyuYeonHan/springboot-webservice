@@ -2,6 +2,7 @@ package com.gyuyeon.springbook.domain.posts;
 
 import com.gyuyeon.springbook.domain.BaseTimeEntity;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class Posts extends BaseTimeEntity {
 
