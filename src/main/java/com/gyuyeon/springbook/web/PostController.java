@@ -14,8 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpSession;
 public class PostController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
 
     @GetMapping
     public String showPosts(Model model) {

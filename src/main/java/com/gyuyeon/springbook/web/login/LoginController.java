@@ -1,6 +1,6 @@
 package com.gyuyeon.springbook.web.login;
 
-import com.gyuyeon.springbook.domain.login.LoginService;
+import com.gyuyeon.springbook.service.login.LoginService;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

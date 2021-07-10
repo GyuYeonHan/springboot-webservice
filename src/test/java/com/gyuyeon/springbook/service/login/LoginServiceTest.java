@@ -1,4 +1,4 @@
-package com.gyuyeon.springbook.domain.login;
+package com.gyuyeon.springbook.service.login;
 
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
