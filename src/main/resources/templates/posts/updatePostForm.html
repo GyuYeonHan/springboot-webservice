@@ -34,6 +34,15 @@
         </form>
     </div>
 </div>
+<br>
+</div>
+    <div th:each="comment : ${comments}">
+        <div th:object="${comment}">
+            <div th:text="*{writer}"></div>
+            <div th:text="*{content}"></div>
+        </div>
+    </div>
+</div>
 <th:block th:replace="layout/fragment :: script" />
 </body>
 </html>

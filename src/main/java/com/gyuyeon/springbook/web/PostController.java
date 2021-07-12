@@ -1,6 +1,9 @@
 package com.gyuyeon.springbook.web;
 
+import com.gyuyeon.springbook.domain.comments.Comments;
+import com.gyuyeon.springbook.domain.posts.Posts;
 import com.gyuyeon.springbook.domain.user.User;
+import com.gyuyeon.springbook.service.comments.CommentsService;
 import com.gyuyeon.springbook.service.posts.PostsService;
 import com.gyuyeon.springbook.web.argumentresolver.Login;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
@@ -14,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostsService postsService;
+    private final CommentsService commentsService;
 
     @GetMapping
     public String showPosts(Model model) {
@@ -52,8 +58,11 @@ public class PostController {
 
     @GetMapping("/{id}")
     public String updateFormView(@PathVariable Long id, Model model) {
-        PostsResponseDto dto = postsService.findById(id);
+        Posts posts = postsService.findById(id);
+        PostsResponseDto dto = new PostsResponseDto(posts);
+        List<Comments> commentsList = commentsService.findByPost(posts);
         model.addAttribute("post", dto);
+        model.addAttribute("comments", commentsList);
 
         return "posts/updatePostForm";
     }
