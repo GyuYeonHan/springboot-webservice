@@ -1,5 +1,6 @@
 package com.gyuyeon.springbook.domain.comments;
 
+import com.gyuyeon.springbook.domain.posts.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
 
-    @Query("SELECT c from Comments c ORDER BY c.id DESC")
-    List<Comments> findAllDesc();
+    @Query("select c from Comments c where c.posts = ?1")
+    List<Comments> findByPost(Posts post);
 
 }

@@ -24,11 +24,7 @@ public class CommentsRepositoryTest {
     @Autowired
     CommentsRepository commentsRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
     Posts posts;
-    User user;
 
     @BeforeEach
     void setUp() {
@@ -38,20 +34,10 @@ public class CommentsRepositoryTest {
         posts = Posts.builder()
                 .title(title)
                 .content(content)
-                .author("gks951020@gmail.com")
+                .author("test@gmail.com")
                 .build();
 
         postsRepository.save(posts);
-
-        user = User.builder()
-                .name("userA")
-                .role(Role.GUEST)
-                .email("test@email.com")
-                .loginId("testid")
-                .password("testpassword")
-                .build();
-
-        userRepository.save(user);
     }
 
     @AfterEach
@@ -65,7 +51,7 @@ public class CommentsRepositoryTest {
         //given
         Comments comments = Comments.builder()
                 .posts(posts)
-                .user(user)
+                .writer("테스터")
                 .content("테스트 댓글")
                 .build();
 
@@ -82,7 +68,7 @@ public class CommentsRepositoryTest {
         //given
         Comments comments = Comments.builder()
                 .posts(posts)
-                .user(user)
+                .writer("테스터")
                 .content("테스트 댓글")
                 .build();
 
@@ -99,7 +85,7 @@ public class CommentsRepositoryTest {
         //given
         Comments comments = Comments.builder()
                 .posts(posts)
-                .user(user)
+                .writer("테스터")
                 .content("테스트 댓글")
                 .build();
 
@@ -119,7 +105,7 @@ public class CommentsRepositoryTest {
         //given
         Comments comments = Comments.builder()
                 .posts(posts)
-                .user(user)
+                .writer("테스터")
                 .content("테스트 댓글")
                 .build();
 
