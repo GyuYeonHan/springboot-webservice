@@ -1,4 +1,4 @@
-package com.gyuyeon.springbook.domain.posts;
+package com.gyuyeon.springbook.domain;
 
 import com.gyuyeon.springbook.domain.BaseTimeEntity;
 import lombok.Builder;
@@ -10,7 +10,6 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
 public class Posts extends BaseTimeEntity {
 
@@ -18,12 +17,13 @@ public class Posts extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 500, nullable = false)
+    @Column(length = 50, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(nullable = false)
     private String author;
 
     @Builder

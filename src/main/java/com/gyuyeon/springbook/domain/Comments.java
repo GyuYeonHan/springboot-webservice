@@ -1,8 +1,5 @@
-package com.gyuyeon.springbook.domain.comments;
+package com.gyuyeon.springbook.domain;
 
-import com.gyuyeon.springbook.domain.BaseTimeEntity;
-import com.gyuyeon.springbook.domain.posts.Posts;
-import com.gyuyeon.springbook.domain.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,14 +18,20 @@ public class Comments extends BaseTimeEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private Posts posts;
 
+    @Column(nullable = false)
     private String writer;
 
+    @Column(nullable = false)
     private String content;
 
     @Builder
     public Comments(Posts posts, String writer, String content) {
         this.posts = posts;
         this.writer = writer;
+        this.content = content;
+    }
+
+    public void update(String content) {
         this.content = content;
     }
 }

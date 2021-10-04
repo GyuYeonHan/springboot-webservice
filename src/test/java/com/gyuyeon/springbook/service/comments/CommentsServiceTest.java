@@ -1,12 +1,10 @@
 package com.gyuyeon.springbook.service.comments;
 
-import com.gyuyeon.springbook.domain.comments.Comments;
-import com.gyuyeon.springbook.domain.comments.CommentsRepository;
-import com.gyuyeon.springbook.domain.posts.Posts;
-import com.gyuyeon.springbook.domain.posts.PostsRepository;
-import com.gyuyeon.springbook.domain.user.Role;
-import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.domain.user.UserRepository;
+import com.gyuyeon.springbook.domain.Comments;
+import com.gyuyeon.springbook.repository.CommentsRepository;
+import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.PostsRepository;
+import com.gyuyeon.springbook.service.CommentsService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommentsServiceTest {

@@ -2,12 +2,12 @@ package com.gyuyeon.springbook.web.user;
 
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.domain.user.UserRepository;
-import com.gyuyeon.springbook.service.user.UserService;
+import com.gyuyeon.springbook.service.UserService;
 import com.gyuyeon.springbook.web.user.form.UserSaveForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +40,11 @@ public class UserController {
                 .password(form.getPassword())
                 .build();
 
-        userService.save(user);
+        if (!userService.save(user)) {
+            bindingResult.addError(new FieldError("user", "loginId", "중복된 아이디가 존재합니다."));
+            return "users/addUserForm";
+        }
+
         return "redirect:/";
     }
 }

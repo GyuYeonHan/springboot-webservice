@@ -1,5 +1,6 @@
-package com.gyuyeon.springbook.domain.posts;
+package com.gyuyeon.springbook.repository;
 
+import com.gyuyeon.springbook.domain.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -7,6 +8,6 @@ import java.util.List;
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {
 
-    @Query("SELECT p from Posts p ORDER BY p.id DESC")
+    @Query("select p from Posts p order by p.id desc")
     List<Posts> findAllDesc();
 }

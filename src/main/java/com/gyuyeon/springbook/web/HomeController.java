@@ -1,9 +1,7 @@
 package com.gyuyeon.springbook.web;
 
 import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.domain.user.UserRepository;
 import com.gyuyeon.springbook.web.argumentresolver.Login;
-import com.gyuyeon.springbook.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

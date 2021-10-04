@@ -2,13 +2,16 @@ package com.gyuyeon.springbook.service.login;
 
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.domain.user.UserRepository;
+import com.gyuyeon.springbook.repository.UserRepository;
+import com.gyuyeon.springbook.service.LoginService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class LoginServiceTest {
 
     @Autowired

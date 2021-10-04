@@ -1,5 +1,6 @@
-package com.gyuyeon.springbook.domain.user;
+package com.gyuyeon.springbook.repository;
 
+import com.gyuyeon.springbook.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

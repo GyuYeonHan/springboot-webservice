@@ -1,14 +1,12 @@
 package com.gyuyeon.springbook;
 
-import com.gyuyeon.springbook.domain.comments.Comments;
-import com.gyuyeon.springbook.domain.comments.CommentsRepository;
-import com.gyuyeon.springbook.domain.posts.Posts;
-import com.gyuyeon.springbook.domain.posts.PostsRepository;
+import com.gyuyeon.springbook.domain.Comments;
+import com.gyuyeon.springbook.repository.CommentsRepository;
+import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.domain.user.UserRepository;
-import com.gyuyeon.springbook.service.comments.CommentsService;
-import com.gyuyeon.springbook.service.posts.PostsService;
+import com.gyuyeon.springbook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

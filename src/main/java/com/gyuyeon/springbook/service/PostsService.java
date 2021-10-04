@@ -1,9 +1,8 @@
-package com.gyuyeon.springbook.service.posts;
+package com.gyuyeon.springbook.service;
 
-import com.gyuyeon.springbook.domain.posts.Posts;
-import com.gyuyeon.springbook.domain.posts.PostsRepository;
+import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.web.dto.PostsListResponseDto;
-import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +33,7 @@ public class PostsService {
     }
 
     public Posts findById(Long id) {
-        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-
-        return entity;
+        return postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
     }
 
     @Transactional(readOnly = true)
