@@ -7,22 +7,23 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comments extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "comment_id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Posts posts;
 
     @Column(nullable = false)
     private String writer;
 
     @Column(nullable = false)
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Posts posts;
 
     @Builder
     public Comments(Posts posts, String writer, String content) {
