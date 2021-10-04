@@ -8,10 +8,12 @@ import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+@Profile("local")
 @Component
 @RequiredArgsConstructor
 public class DataInit {
