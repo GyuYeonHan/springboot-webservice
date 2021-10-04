@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false)

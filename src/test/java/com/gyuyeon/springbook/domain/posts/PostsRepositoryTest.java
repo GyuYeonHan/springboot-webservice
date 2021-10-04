@@ -20,7 +20,7 @@ class PostsRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        postsRepository.deleteAll();
+//        postsRepository.deleteAll();
     }
 
     @Test

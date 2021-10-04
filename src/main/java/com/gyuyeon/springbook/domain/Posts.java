@@ -1,20 +1,20 @@
 package com.gyuyeon.springbook.domain;
 
 import com.gyuyeon.springbook.domain.BaseTimeEntity;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Posts extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Column(name = "post_id")
     private Long id;
 
     @Column(length = 50, nullable = false)
@@ -25,6 +25,9 @@ public class Posts extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String author;
+
+    @OneToMany(mappedBy = "posts")
+    private List<Comments> commentsList = new ArrayList<>();
 
     @Builder
     public Posts(String title, String content, String author) {
@@ -38,3 +41,4 @@ public class Posts extends BaseTimeEntity {
         this.content = content;
     }
 }
+

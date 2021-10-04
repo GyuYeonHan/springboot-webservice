@@ -1,6 +1,8 @@
 package com.gyuyeon.springbook.service;
 
+import com.gyuyeon.springbook.domain.Comments;
 import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.CommentsRepository;
 import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.web.dto.PostsListResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final CommentsRepository commentsRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -46,6 +49,12 @@ public class PostsService {
     @Transactional
     public void delete(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        List<Comments> commentsList = commentsRepository.findByPost(posts);
+
+        for (Comments comment : commentsList) {
+            commentsRepository.delete(comment);
+        }
+
         postsRepository.delete(posts);
     }
 }
