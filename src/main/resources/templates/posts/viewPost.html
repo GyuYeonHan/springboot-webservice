@@ -6,38 +6,29 @@
 <div class="m-5">
     <header th:replace="layout/fragment :: header"></header>
     <div>
-        <form th:action th:object="${post}" method="post">
+        <th:block th:object="${post}">
             <div class="header">
-                <div class="form-group">
-                    <input type="text" id="title" class="form-control" th:field="*{title}"
-                           th:errorclass="field-error" placeholder="제목을 입력하세요">
-                    <div class="field-error" th:errors="*{title}">제목 오류</div>
-                </div>
+                <span class="h2" th:text="*{title}"></span>
                 <span th:text="*{author}"></span>
                 <div class="float-end">
+<!--                    <a href="/posts" role="button" class="btn btn-secondary btn-sm">목록</a>-->
                     <button type="button" class="btn btn-secondary btn-sm"
                             th:onclick="|location.href='@{/posts}'|">목록
                     </button>
                     <button type="button" class="btn btn-primary btn-sm"
-                            th:onclick="|location.href='@{/posts/update/{id}(id=${post.id})}'|">완료
+                            th:onclick="|location.href='@{/posts/update/{id}(id=${post.id})}'|">수정
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
                         삭제
                     </button>
                 </div>
             </div>
-            <textarea class="w-100 mt-2" th:text="*{content}">
+            <div class="w-100 mt-2">
                 <div th:each="line : ${postContent}">
                     <p th:text="${line}"></p>
                 </div>
-            </textarea>
-            <div class="form-group">
-                <label for="content">내용</label>
-                <input type="text" id="content" class="form-control" th:field="*{content}"
-                       th:errorclass="field-error" placeholder="내용을 입력하세요">
-                <div class="field-error" th:errors="*{content}">내용 오류</div>
             </div>
-        </form>
+        </th:block>
     </div>
     <br>
     <p th:text="|댓글 (${comments.size()})|"></p>

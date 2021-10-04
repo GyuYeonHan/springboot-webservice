@@ -1,6 +1,6 @@
 package com.gyuyeon.springbook.web.login;
 
-import com.gyuyeon.springbook.service.login.LoginService;
+import com.gyuyeon.springbook.service.LoginService;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,12 @@
 package com.gyuyeon.springbook.web;
 
-import com.gyuyeon.springbook.domain.comments.Comments;
-import com.gyuyeon.springbook.domain.posts.Posts;
+import com.gyuyeon.springbook.domain.Comments;
+import com.gyuyeon.springbook.domain.Posts;
 import com.gyuyeon.springbook.domain.user.User;
-import com.gyuyeon.springbook.service.comments.CommentsService;
-import com.gyuyeon.springbook.service.posts.PostsService;
+import com.gyuyeon.springbook.service.CommentsService;
+import com.gyuyeon.springbook.service.PostsService;
 import com.gyuyeon.springbook.web.argumentresolver.Login;
+import com.gyuyeon.springbook.web.dto.CommentsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
@@ -16,12 +17,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 
+
 @Slf4j
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
 
@@ -29,14 +33,21 @@ public class PostController {
     private final CommentsService commentsService;
 
     @GetMapping
-    public String showPosts(Model model) {
+    public String listPosts(Model model, @RequestBody(required = false) Boolean isSaved, @RequestBody(required = false) Boolean isDeleted) {
         model.addAttribute("posts", postsService.findAllDesc());
+        if (isSaved != null && isSaved) {
+            model.addAttribute("isSaved", true);
+        }
+
+        if (isDeleted != null && isDeleted) {
+            model.addAttribute("isDeleted", true);
+        }
 
         return "posts/posts";
     }
 
     @GetMapping("/save")
-    public String saveFormView(@Login User user, Model model) {
+    public String savePostForm(@Login User user, Model model) {
         PostsSaveRequestDto dto = new PostsSaveRequestDto();
         if (user != null) {
             dto.setAuthor(user.getName());
@@ -47,17 +58,50 @@ public class PostController {
     }
 
     @PostMapping("/save")
-    public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult) {
+    public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult, RedirectAttributes redirect) {
         if (bindingResult.hasErrors()) {
             return "posts/savePostForm";
         }
 
         postsService.save(dto);
+        redirect.addFlashAttribute("isSaved", true);
         return "redirect:/posts";
     }
 
+    @PostMapping("/comment/save/{postId}")
+    @ResponseBody
+    public Long saveComment(@PathVariable Long postId,
+                              @RequestBody CommentsSaveRequestDto dto, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "posts/viewPost";
+//        }
+        Posts post = postsService.findById(postId);
+
+        Comments comments = dto.toEntity();
+        comments.setPosts(post);
+        comments.setWriter("테스트");
+
+        Long savedId = commentsService.save(comments);
+        return savedId;
+    }
+
     @GetMapping("/{id}")
-    public String updateFormView(@PathVariable Long id, Model model) {
+    public String viewPost(@PathVariable Long id, Model model) {
+        Posts posts = postsService.findById(id);
+        PostsResponseDto dto = new PostsResponseDto(posts);
+        List<Comments> commentsList = commentsService.findByPost(posts);
+        List<String> content = Arrays.asList(posts.getContent().split("\n"));
+
+        model.addAttribute("post", dto);
+        model.addAttribute("postContent", content);
+        model.addAttribute("comments", commentsList);
+        model.addAttribute("commentForm", new CommentsSaveRequestDto());
+
+        return "posts/viewPost";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updatePostForm(@PathVariable Long id, Model model) {
         Posts posts = postsService.findById(id);
         PostsResponseDto dto = new PostsResponseDto(posts);
         List<Comments> commentsList = commentsService.findByPost(posts);
@@ -67,20 +111,22 @@ public class PostController {
         return "posts/updatePostForm";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     public String updatePost(@PathVariable Long id, @Validated @ModelAttribute("post") PostsUpdateRequestDto dto,
-                         BindingResult bindingResult) {
+                             BindingResult bindingResult) {
         log.info("dto = {}", dto);
         if (bindingResult.hasErrors()) {
             return "posts/updatePostForm";
         }
         postsService.update(id, dto);
-        return "redirect:/posts";
+        return "redirect:/posts/{id}";
     }
 
     @GetMapping("/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
+    public String deletePost(@PathVariable Long id, RedirectAttributes redirect) {
         postsService.delete(id);
+        redirect.addFlashAttribute("isDeleted", true);
+
         return "redirect:/posts";
     }
 }
