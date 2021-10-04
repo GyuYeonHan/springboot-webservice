@@ -1,6 +1,9 @@
 package com.gyuyeon.springbook.domain.posts;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.PostsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,7 @@ class PostsRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        postsRepository.deleteAll();
+//        postsRepository.deleteAll();
     }
 
     @Test
@@ -29,7 +32,7 @@ class PostsRepositoryTest {
         postsRepository.save(Posts.builder()
                 .title(title)
                 .content(content)
-                .author("gks951020@gmail.com")
+                .author("test@gmail.com")
                 .build());
 
         //when

@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:tcp://localhost/~/subtogether
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL57Dialect
+#          storage_engine: innodb
+
+    hibernate:
+      ddl-auto: create
+
+  session:
+    store-type: jdbc
+
+logging.level:
+  org.hibernate.SQL: debug

@@ -1,9 +1,10 @@
-package com.gyuyeon.springbook.service.posts;
+package com.gyuyeon.springbook.service;
 
-import com.gyuyeon.springbook.domain.posts.Posts;
-import com.gyuyeon.springbook.domain.posts.PostsRepository;
+import com.gyuyeon.springbook.domain.Comments;
+import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.repository.CommentsRepository;
+import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.web.dto.PostsListResponseDto;
-import com.gyuyeon.springbook.web.dto.PostsResponseDto;
 import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final CommentsRepository commentsRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -33,10 +35,8 @@ public class PostsService {
         return id;
     }
 
-    public PostsResponseDto findById(Long id) {
-        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-
-        return new PostsResponseDto(entity);
+    public Posts findById(Long id) {
+        return postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
     }
 
     @Transactional(readOnly = true)
@@ -49,6 +49,12 @@ public class PostsService {
     @Transactional
     public void delete(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        List<Comments> commentsList = commentsRepository.findByPost(posts);
+
+        for (Comments comment : commentsList) {
+            commentsRepository.delete(comment);
+        }
+
         postsRepository.delete(posts);
     }
 }

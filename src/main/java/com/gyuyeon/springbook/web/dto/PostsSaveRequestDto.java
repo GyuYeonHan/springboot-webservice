@@ -1,6 +1,6 @@
 package com.gyuyeon.springbook.web.dto;
 
-import com.gyuyeon.springbook.domain.posts.Posts;
+import com.gyuyeon.springbook.domain.Posts;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
