@@ -20,6 +20,7 @@ public class UserService {
         if (duplicated.isPresent()) {
             return false;
         }
+        userRepository.save(user);
 
         return true;
     }
