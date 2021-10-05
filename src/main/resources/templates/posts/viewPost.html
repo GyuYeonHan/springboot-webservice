@@ -76,7 +76,7 @@
         const postId = [[${post.id}]];
         const jsonData = JSON.stringify({
             content: $("#commentContent").val(),
-            writer: "테스트"
+            writer: [[${commentForm.writer}]]
         });
         $.ajax({
             type : "POST",

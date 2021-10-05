@@ -71,31 +71,33 @@ public class PostController {
     @PostMapping("/comment/save/{postId}")
     @ResponseBody
     public Long saveComment(@PathVariable Long postId,
-                              @RequestBody CommentsSaveRequestDto dto, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "posts/viewPost";
-//        }
+                              @RequestBody CommentsSaveRequestDto dto) {
         Posts post = postsService.findById(postId);
 
         Comments comments = dto.toEntity();
         comments.setPosts(post);
-        comments.setWriter("테스트");
 
-        Long savedId = commentsService.save(comments);
-        return savedId;
+        return commentsService.save(comments);
     }
 
     @GetMapping("/{id}")
-    public String viewPost(@PathVariable Long id, Model model) {
+    public String viewPost(@PathVariable Long id, Model model, @Login User user) {
         Posts posts = postsService.findById(id);
-        PostsResponseDto dto = new PostsResponseDto(posts);
+        PostsResponseDto postDto = new PostsResponseDto(posts);
         List<Comments> commentsList = commentsService.findByPost(posts);
         List<String> content = Arrays.asList(posts.getContent().split("\n"));
 
-        model.addAttribute("post", dto);
+        model.addAttribute("post", postDto);
         model.addAttribute("postContent", content);
         model.addAttribute("comments", commentsList);
-        model.addAttribute("commentForm", new CommentsSaveRequestDto());
+
+        CommentsSaveRequestDto commentDto = new CommentsSaveRequestDto();
+        if (user == null) {
+            commentDto.setWriter("익명의 글쓴이");
+        } else {
+            commentDto.setWriter(user.getName());
+        }
+        model.addAttribute("commentForm", commentDto);
 
         return "posts/viewPost";
     }
