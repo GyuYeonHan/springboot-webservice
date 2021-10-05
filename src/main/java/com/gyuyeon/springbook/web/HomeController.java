@@ -24,4 +24,9 @@ public class HomeController {
         model.addAttribute("user", loginUser);
         return "loginHome";
     }
+
+    @GetMapping("/cat")
+    public String cat() {
+        return "playground/kitten";
+    }
 }
