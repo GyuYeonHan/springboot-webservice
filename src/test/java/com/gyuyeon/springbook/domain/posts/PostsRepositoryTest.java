@@ -2,7 +2,8 @@ package com.gyuyeon.springbook.domain.posts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.domain.post.Category;
+import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.repository.PostsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ class PostsRepositoryTest {
                 .title(title)
                 .content(content)
                 .author("test@gmail.com")
+                .category(Category.일기)
                 .build());
 
         //when
@@ -52,6 +54,7 @@ class PostsRepositoryTest {
                 .title("title")
                 .content("content")
                 .author("author")
+                .category(Category.일기)
                 .build());
 
         //when

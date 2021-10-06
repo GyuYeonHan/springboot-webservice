@@ -1,8 +1,9 @@
 package com.gyuyeon.springbook;
 
 import com.gyuyeon.springbook.domain.Comments;
+import com.gyuyeon.springbook.domain.post.Category;
 import com.gyuyeon.springbook.repository.CommentsRepository;
-import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.domain.user.Role;
 import com.gyuyeon.springbook.domain.user.User;
@@ -60,6 +61,7 @@ public class DataInit {
                 .title(title)
                 .content(content)
                 .author("테스터")
+                .category(Category.일기)
                 .build();
 
         postsRepository.save(posts);

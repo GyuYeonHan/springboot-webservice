@@ -1,9 +1,11 @@
 package com.gyuyeon.springbook.web.dto;
 
-import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.domain.post.Category;
+import com.gyuyeon.springbook.domain.post.Posts;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class PostsSaveRequestDto {
@@ -20,11 +22,15 @@ public class PostsSaveRequestDto {
     @NotBlank
     private String author;
 
+    @NotNull
+    private Category category;
+
     @Builder
-    public PostsSaveRequestDto(String title, String content, String author) {
+    public PostsSaveRequestDto(String title, String content, String author, Category category) {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.category = category;
     }
 
     public Posts toEntity() {
@@ -32,6 +38,7 @@ public class PostsSaveRequestDto {
                 .title(title)
                 .content(content)
                 .author(author)
+                .category(category)
                 .build();
     }
 }

@@ -1,7 +1,7 @@
 package com.gyuyeon.springbook.web;
 
 import com.gyuyeon.springbook.domain.Comments;
-import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.service.CommentsService;
 import com.gyuyeon.springbook.service.PostsService;

@@ -1,5 +1,6 @@
 package com.gyuyeon.springbook.domain;
 
+import com.gyuyeon.springbook.domain.post.Posts;
 import lombok.*;
 
 import javax.persistence.*;

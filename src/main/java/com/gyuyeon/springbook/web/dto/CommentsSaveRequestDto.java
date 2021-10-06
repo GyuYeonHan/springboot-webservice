@@ -1,7 +1,6 @@
 package com.gyuyeon.springbook.web.dto;
 
 import com.gyuyeon.springbook.domain.Comments;
-import com.gyuyeon.springbook.domain.Posts;
 import lombok.Builder;
 import lombok.Data;
 

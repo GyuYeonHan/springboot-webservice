@@ -2,10 +2,8 @@ package com.gyuyeon.springbook.service;
 
 import com.gyuyeon.springbook.domain.Comments;
 import com.gyuyeon.springbook.repository.CommentsRepository;
-import com.gyuyeon.springbook.domain.Posts;
-import com.gyuyeon.springbook.web.dto.CommentsSaveRequestDto;
+import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.web.dto.CommentsUpdateRequestDto;
-import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

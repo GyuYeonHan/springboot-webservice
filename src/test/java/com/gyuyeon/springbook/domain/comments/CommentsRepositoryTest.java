@@ -1,7 +1,8 @@
 package com.gyuyeon.springbook.domain.comments;
 
 import com.gyuyeon.springbook.domain.Comments;
-import com.gyuyeon.springbook.domain.Posts;
+import com.gyuyeon.springbook.domain.post.Category;
+import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.repository.PostsRepository;
 import com.gyuyeon.springbook.repository.CommentsRepository;
 import org.assertj.core.api.Assertions;
@@ -32,6 +33,7 @@ public class CommentsRepositoryTest {
                 .title(title)
                 .content(content)
                 .author("test@gmail.com")
+                .category(Category.일기)
                 .build();
 
         postsRepository.save(posts);

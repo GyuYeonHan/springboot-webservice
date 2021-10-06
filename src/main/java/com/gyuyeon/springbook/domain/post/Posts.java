@@ -1,6 +1,7 @@
-package com.gyuyeon.springbook.domain;
+package com.gyuyeon.springbook.domain.post;
 
 import com.gyuyeon.springbook.domain.BaseTimeEntity;
+import com.gyuyeon.springbook.domain.Comments;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,14 +27,19 @@ public class Posts extends BaseTimeEntity {
     @Column(nullable = false)
     private String author;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     @OneToMany(mappedBy = "posts")
-    private List<Comments> commentsList = new ArrayList<>();
+    private final List<Comments> commentsList = new ArrayList<>();
 
     @Builder
-    public Posts(String title, String content, String author) {
+    public Posts(String title, String content, String author, Category category) {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.category = category;
     }
 
     public void update(String title, String content) {
