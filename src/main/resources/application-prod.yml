@@ -17,4 +17,4 @@ spring:
       max-request-size: 10MB
 
 file:
-  dir: /home/ec2-user/app/images
+  dir: /home/ec2-user/app/images/

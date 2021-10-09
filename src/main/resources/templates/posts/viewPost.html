@@ -44,7 +44,7 @@
                 <small th:text="*{writer}"></small>
                 <div class="vr"></div>
                 <span th:text="*{content}"></span>
-                <button type="button" class="btn-close float-end" aria-label="Close"></button>
+                <button type="button" class="btn-close float-end" aria-label="Close" th:id="*{id}"></button>
             </div>
             <hr>
         </div>
@@ -87,7 +87,7 @@
         });
         $.ajax({
             type : "POST",
-            url : "/posts/comment/save/" + postId,
+            url : "/posts/" + postId + "/comment",
             dataType : "json",
             contentType : "application/json; charset=utf-8",
             data : jsonData,
@@ -99,6 +99,20 @@
             }
         });
     });
+
+    // $(".btn-close").click(function() {
+    //     const commentId = [[${post.id}]];
+    //     $.ajax({
+    //         type : "DELETE",
+    //         url : "/post/comment/" + commentId,
+    //         success : function() {
+    //             window.location.href = '/posts/' + postId;
+    //         },
+    //         error : function() {
+    //             alert("댓글 삭제에 실패하였습니다.");
+    //         }
+    //     });
+    // });
 </script>
 </body>
 </html>
