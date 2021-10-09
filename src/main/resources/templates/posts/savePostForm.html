@@ -6,7 +6,7 @@
 <div class="m-5">
     <header th:replace="layout/fragment :: header"></header>
     <div>
-        <form th:action th:object="${post}" method="post">
+        <form th:action th:object="${post}" method="post" enctype="multipart/form-data">
 
             <label for="category" class="form-label">카테고리</label>
             <select id="category" th:field="*{category}" class="form-select">
@@ -25,7 +25,7 @@
 
             <div class="mb-3">
                 <label for="author" class="form-label">작성자</label>
-                <input type="text" id="author" th:if="${post.author != null}" class="form-control" th:field="*{author}" readonly>
+                <input type="text" id="author" class="form-control" th:field="*{author}" readonly>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="anonymousAuthor" onclick="check();">
                     <label class="form-check-label" for="anonymousAuthor">익명으로 쓰기</label>
@@ -41,9 +41,14 @@
 
             </div>
 
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFileMultiple" th:field="*{imageFiles}" multiple>
+            </div>
+
+
             <hr class="my-4">
             <a href="/posts" role="button" class="btn btn-secondary">취소</a>
-            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="submit" class="btn btn-primary">수정</button>
 
         </form>
     </div>

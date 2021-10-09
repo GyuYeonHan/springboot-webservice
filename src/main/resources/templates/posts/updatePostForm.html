@@ -6,101 +6,64 @@
 <div class="m-5">
     <header th:replace="layout/fragment :: header"></header>
     <div>
-        <form th:action th:object="${post}" method="post">
-            <div class="header">
-                <div class="form-group">
-                    <input type="text" id="title" class="form-control" th:field="*{title}"
-                           th:errorclass="field-error" placeholder="제목을 입력하세요">
-                    <div class="field-error" th:errors="*{title}">제목 오류</div>
-                </div>
-                <span th:text="*{author}"></span>
-                <div class="float-end">
-                    <button type="button" class="btn btn-secondary btn-sm"
-                            th:onclick="|location.href='@{/posts}'|">목록
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm"
-                            th:onclick="|location.href='@{/posts/update/{id}(id=${post.id})}'|">완료
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        삭제
-                    </button>
-                </div>
+        <form th:action th:object="${post}" method="post" enctype="multipart/form-data">
+
+            <label for="category" class="form-label">카테고리</label>
+            <select id="category" th:field="*{category}" class="form-select">
+                <option th:each="status : ${T(com.gyuyeon.springbook.domain.post.Category).values()}"
+                        th:value="${status}"
+                        th:text="${status}">
+                </option>
+            </select>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" id="title" class="form-control" th:field="*{title}"
+                       th:errorclass="field-error" placeholder="제목을 입력하세요">
+                <div class="field-error" th:errors="*{title}">제목 오류</div>
             </div>
-            <textarea class="w-100 mt-2" th:text="*{content}">
-                <div th:each="line : ${postContent}">
-                    <p th:text="${line}"></p>
-                </div>
-            </textarea>
-            <div class="form-group">
-                <label for="content">내용</label>
-                <input type="text" id="content" class="form-control" th:field="*{content}"
-                       th:errorclass="field-error" placeholder="내용을 입력하세요">
+
+            <div class="mb-3">
+                <label for="author" class="form-label">작성자</label>
+                <input type="text" id="author" class="form-control" th:field="*{author}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">내용</label>
+                <textarea type="text" id="content" class="form-control" th:field="*{content}"
+                          th:errorclass="field-error" placeholder="내용을 입력하세요" rows="5"></textarea>
                 <div class="field-error" th:errors="*{content}">내용 오류</div>
+
             </div>
+
+<!--            <div class="mb-3">-->
+<!--                <input class="form-control" type="file" id="formFileMultiple" th:field="*{imageFiles}" multiple>-->
+<!--            </div>-->
+
+            <hr class="my-4">
+            <button type="button" class="btn btn-secondary"
+                    th:onclick="|location.href='@{/posts/{id}(id=${post.id})}'|">취소
+            </button>
+            <button type="submit" class="btn btn-primary">등록</button>
+
         </form>
     </div>
-    <br>
-    <p th:text="|댓글 (${comments.size()})|"></p>
-    <hr>
-    <div>
-        <div th:each="comment : ${comments}">
-            <div th:object="${comment}">
-                <small th:text="*{writer}"></small>
-                <div class="vr"></div>
-                <span th:text="*{content}"></span>
-                <button type="button" class="btn-close float-end" aria-label="Close"></button>
-            </div>
-            <hr>
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" id="commentContent" class="form-control" placeholder="댓글을 입력하세요.">
-            <button type="button" class="btn btn-outline-secondary" id="button-comment">작성</button>
-        </div>
-    </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">경고</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    정말로 글을 삭제하시겠습니까?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary"
-                            th:onclick="|location.href='@{/posts/delete/{id}(id=${post.id})}'|">삭제</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<th:block th:replace="layout/fragment :: script"/>
+
 <script th:inline="javascript">
-    $("#button-comment").click(function() {
-        const postId = [[${post.id}]];
-        const jsonData = JSON.stringify({
-            content: $("#commentContent").val(),
-            writer: "테스트"
-        });
-        $.ajax({
-            type : "POST",
-            url : "/posts/comment/save/" + postId,
-            dataType : "json",
-            contentType : "application/json; charset=utf-8",
-            data : jsonData,
-            success : function() {
-                window.location.href = '/posts/' + postId;
-            },
-            error : function() {
-                alert("댓글 등록에 실패하였습니다.");
-            }
-        });
-    });
+    function check() {
+        const input = document.getElementById("author");
+        const checkBox = document.getElementById('anonymousAuthor');
+        if (checkBox.checked) {
+            input.readOnly = false;
+            input.value = "";
+        } else {
+            input.readOnly = true;
+            input.value = [[${post.author}]];
+        }
+    }
 </script>
+
+<th:block th:replace="layout/fragment :: script" />
 </body>
 </html>

@@ -10,3 +10,6 @@ spring:
 
   session:
     store-type: jdbc
+
+file:
+  dir: /home/ec2-user/app/images

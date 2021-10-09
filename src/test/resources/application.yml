@@ -27,3 +27,6 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+file:
+  dir: /Users/gyuyeon/Desktop/study/file/

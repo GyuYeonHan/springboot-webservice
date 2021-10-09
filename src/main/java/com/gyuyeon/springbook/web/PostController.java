@@ -4,12 +4,10 @@ import com.gyuyeon.springbook.domain.Comments;
 import com.gyuyeon.springbook.domain.post.Posts;
 import com.gyuyeon.springbook.domain.user.User;
 import com.gyuyeon.springbook.service.CommentsService;
+import com.gyuyeon.springbook.service.ImageService;
 import com.gyuyeon.springbook.service.PostsService;
 import com.gyuyeon.springbook.web.argumentresolver.Login;
-import com.gyuyeon.springbook.web.dto.CommentsSaveRequestDto;
-import com.gyuyeon.springbook.web.dto.PostsResponseDto;
-import com.gyuyeon.springbook.web.dto.PostsSaveRequestDto;
-import com.gyuyeon.springbook.web.dto.PostsUpdateRequestDto;
+import com.gyuyeon.springbook.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,10 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -31,10 +32,15 @@ public class PostController {
 
     private final PostsService postsService;
     private final CommentsService commentsService;
+    private final ImageService imageService;
 
     @GetMapping
     public String listPosts(Model model, @RequestBody(required = false) Boolean isSaved, @RequestBody(required = false) Boolean isDeleted) {
-        model.addAttribute("posts", postsService.findAllDesc());
+        List<PostsListResponseDto> postDtoList = postsService.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+
+        model.addAttribute("posts", postDtoList);
         if (isSaved != null && isSaved) {
             model.addAttribute("isSaved", true);
         }
@@ -58,12 +64,17 @@ public class PostController {
     }
 
     @PostMapping("/save")
-    public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String savePost(@Validated @ModelAttribute("post") PostsSaveRequestDto dto, BindingResult bindingResult, RedirectAttributes redirect) throws IOException {
         if (bindingResult.hasErrors()) {
             return "posts/savePostForm";
         }
 
-        postsService.save(dto);
+        Long savedPostId = postsService.save(dto);
+        Posts post = postsService.findById(savedPostId);
+
+        List<MultipartFile> imageFiles = dto.getImageFiles();
+        imageService.saveImagesToPost(imageFiles, post);
+
         redirect.addFlashAttribute("isSaved", true);
         return "redirect:/posts";
     }
@@ -106,9 +117,7 @@ public class PostController {
     public String updatePostForm(@PathVariable Long id, Model model) {
         Posts posts = postsService.findById(id);
         PostsResponseDto dto = new PostsResponseDto(posts);
-        List<Comments> commentsList = commentsService.findByPost(posts);
         model.addAttribute("post", dto);
-        model.addAttribute("comments", commentsList);
 
         return "posts/updatePostForm";
     }
@@ -116,7 +125,6 @@ public class PostController {
     @PostMapping("/update/{id}")
     public String updatePost(@PathVariable Long id, @Validated @ModelAttribute("post") PostsUpdateRequestDto dto,
                              BindingResult bindingResult) {
-        log.info("dto = {}", dto);
         if (bindingResult.hasErrors()) {
             return "posts/updatePostForm";
         }

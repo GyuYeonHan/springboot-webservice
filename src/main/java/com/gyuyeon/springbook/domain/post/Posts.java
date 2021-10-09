@@ -32,6 +32,9 @@ public class Posts extends BaseTimeEntity {
     private Category category;
 
     @OneToMany(mappedBy = "posts")
+    private final List<ImageFile> imageFiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "posts")
     private final List<Comments> commentsList = new ArrayList<>();
 
     @Builder
@@ -42,9 +45,10 @@ public class Posts extends BaseTimeEntity {
         this.category = category;
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, Category category) {
         this.title = title;
         this.content = content;
+        this.category = category;
     }
 }
 
