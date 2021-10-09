@@ -31,15 +31,19 @@ public class PostsService {
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+    public Posts update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+ id));
         posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getCategory());
 
-        return id;
+        return posts;
     }
 
     public Posts findById(Long id) {
         return postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+    }
+
+    public Posts findFetchById(Long id) {
+        return postsRepository.findFetchById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
     }
 
     @Transactional(readOnly = true)
@@ -54,7 +58,6 @@ public class PostsService {
         List<ImageFile> uploadFileList = imageRepository.findByPost(posts);
 
         for (Comments comment : commentsList) {
-
             commentsRepository.delete(comment);
         }
 

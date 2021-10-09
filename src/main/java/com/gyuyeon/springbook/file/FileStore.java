@@ -50,7 +50,6 @@ public class FileStore {
 
         ImageFile uploadFile = new ImageFile(storeFileName);
         uploadFile.setPosts(posts);
-        imageRepository.save(uploadFile);
 
         return uploadFile;
     }
@@ -70,5 +69,4 @@ public class FileStore {
         File file = new File(getFullPath(fileName));
         return file.delete();
     }
-
 }

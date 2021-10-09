@@ -36,34 +36,42 @@
 
             </div>
 
-<!--            <div class="mb-3">-->
-<!--                <input class="form-control" type="file" id="formFileMultiple" th:field="*{imageFiles}" multiple>-->
-<!--            </div>-->
+            <div th:each="imageFile : ${post.imageFiles}">
+                <img th:src="|/images/${imageFile.storeFileName}|" style="max-width: 600px; height: auto;"/>
+                <button type="button" class="btn-close" aria-label="Close" th:id="|imageDeleteBtn-${imageFile.id}|"></button>
+                <br>
+            </div>
+            <br>
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFileMultiple" th:field="*{imageFiles}" multiple>
+            </div>
 
             <hr class="my-4">
             <button type="button" class="btn btn-secondary"
                     th:onclick="|location.href='@{/posts/{id}(id=${post.id})}'|">취소
             </button>
-            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="submit" class="btn btn-primary">수정</button>
 
         </form>
     </div>
 </div>
 
-<script th:inline="javascript">
-    function check() {
-        const input = document.getElementById("author");
-        const checkBox = document.getElementById('anonymousAuthor');
-        if (checkBox.checked) {
-            input.readOnly = false;
-            input.value = "";
-        } else {
-            input.readOnly = true;
-            input.value = [[${post.author}]];
-        }
-    }
-</script>
-
 <th:block th:replace="layout/fragment :: script" />
+<script th:inline="javascript">
+    $(".btn-close").click(function() {
+        const postId = [[${post.id}]];
+        const imageId = $(this).attr('id').split("-")[1];
+        $.ajax({
+            type : "DELETE",
+            url : "/images/" + imageId,
+            success : function() {
+                window.location.href = '/posts/update/' + postId;
+            },
+            error : function() {
+                alert("이미지 파일 삭제에 실패하였습니다.");
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/fragment :: head">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2>에러가 발생했습니다.</h2>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="text-center">
+    <p>뒤로 돌아가세요!!!</p>
+  </div>
+
+
+</div> <!-- /container -->
+
+<th:block th:replace="layout/fragment :: script" />
+</body>
+</html>

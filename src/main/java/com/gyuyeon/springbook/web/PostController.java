@@ -41,6 +41,7 @@ public class PostController {
                 .collect(Collectors.toList());
 
         model.addAttribute("posts", postDtoList);
+
         if (isSaved != null && isSaved) {
             model.addAttribute("isSaved", true);
         }
@@ -95,7 +96,7 @@ public class PostController {
     public String viewPost(@PathVariable Long id, Model model, @Login User user) {
         Posts posts = postsService.findById(id);
         PostsResponseDto postDto = new PostsResponseDto(posts);
-        List<Comments> commentsList = commentsService.findByPost(posts);
+        List<Comments> commentsList = posts.getCommentsList();
         List<String> content = Arrays.asList(posts.getContent().split("\n"));
 
         model.addAttribute("post", postDto);
@@ -124,11 +125,15 @@ public class PostController {
 
     @PostMapping("/update/{id}")
     public String updatePost(@PathVariable Long id, @Validated @ModelAttribute("post") PostsUpdateRequestDto dto,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
             return "posts/updatePostForm";
         }
-        postsService.update(id, dto);
+        Posts updatedPosts = postsService.update(id, dto);
+
+        List<MultipartFile> imageFiles = dto.getImageFiles();
+        imageService.saveImagesToPost(imageFiles, updatedPosts);
+
         return "redirect:/posts/{id}";
     }
 

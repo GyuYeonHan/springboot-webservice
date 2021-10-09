@@ -31,7 +31,7 @@
     </div>
 
     <div th:each="imageFile : ${post.imageFiles}">
-        <img th:src="|/images/${imageFile}|" style="max-width: 600px; height: auto;"/>
+        <img th:src="|/images/${imageFile.storeFileName}|" style="max-width: 600px; height: auto;"/>
         <br>
     </div>
 
@@ -44,7 +44,7 @@
                 <small th:text="*{writer}"></small>
                 <div class="vr"></div>
                 <span th:text="*{content}"></span>
-                <button type="button" class="btn-close float-end" aria-label="Close" th:id="*{id}"></button>
+                <button type="button" class="btn-close float-end" aria-label="Close" th:id="|CommentDeleteBtn-${comment.id}|"></button>
             </div>
             <hr>
         </div>
@@ -77,7 +77,6 @@
 </div>
 
 <th:block th:replace="layout/fragment :: script"/>
-
 <script th:inline="javascript">
     $("#button-comment").click(function() {
         const postId = [[${post.id}]];
@@ -100,19 +99,20 @@
         });
     });
 
-    // $(".btn-close").click(function() {
-    //     const commentId = [[${post.id}]];
-    //     $.ajax({
-    //         type : "DELETE",
-    //         url : "/post/comment/" + commentId,
-    //         success : function() {
-    //             window.location.href = '/posts/' + postId;
-    //         },
-    //         error : function() {
-    //             alert("댓글 삭제에 실패하였습니다.");
-    //         }
-    //     });
-    // });
+    $(".btn-close").click(function() {
+        const postId = [[${post.id}]];
+        const commentId = $(this).attr('id').split("-")[1];
+        $.ajax({
+            type : "DELETE",
+            url : "/posts/comment/" + commentId,
+            success : function() {
+                window.location.href = '/posts/' + postId;
+            },
+            error : function() {
+                alert("댓글 삭제에 실패하였습니다.");
+            }
+        });
+    });
 </script>
 </body>
 </html>
