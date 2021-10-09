@@ -20,8 +20,6 @@ import java.util.UUID;
 @Transactional
 public class FileStore {
 
-    private final ImageRepository imageRepository;
-
     @Value("${file.dir}")
     private String fileDir;
 

@@ -5,6 +5,7 @@ import com.gyuyeon.springbook.domain.post.Posts;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 public class PostsListResponseDto {
@@ -14,6 +15,7 @@ public class PostsListResponseDto {
     private String title;
     private String author;
     private LocalDateTime modifiedDate;
+    private boolean isNew;
 
     public PostsListResponseDto(Posts entity) {
         this.id = entity.getId();
@@ -21,5 +23,6 @@ public class PostsListResponseDto {
         this.title = entity.getTitle();
         this.author = entity.getAuthor();
         this.modifiedDate = entity.getModifiedDate();
+        this.isNew = modifiedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
     }
 }
